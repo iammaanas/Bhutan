@@ -50,3 +50,26 @@ nav{height:68px}
 .map-shell{border-radius:24px;box-shadow:0 25px 70px #0008}
 @media(max-width:900px){.home-hero{grid-template-columns:1fr;gap:50px}.hero-card{max-width:600px;width:100%;margin:auto}.dash-grid{grid-template-columns:1fr}.dash-card.wide{grid-column:auto}.home-fact{grid-template-columns:1fr;gap:25px}.items{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.home-hero{padding-top:7vh}.home-hero h1{font-size:4.5rem}.hero-route{margin:60px 0}.hero-node{width:60px;height:60px}.dash-intro{display:block}.dash-intro h2{margin-top:20px}.items{grid-template-columns:1fr}.day{grid-template-columns:1fr;gap:14px}.dayno{position:static}.home-fact h2{font-size:3.5rem}}
+
+/* --- itinerary data layer + ✨ flair --- */
+.item.expandable{overflow:visible}
+.item.expandable:before{display:none!important}
+.item.expandable{padding-right:92px}
+.item-detail,.item-data{display:none}
+.item.expandable.is-open{box-shadow:0 20px 48px #000b}
+.item.expandable.is-open .item-detail{display:block;margin-top:16px;padding-top:15px;border-top:1px solid #353a31;color:#d7d9d1;font-size:.8rem;line-height:1.65}
+.item.expandable.is-open .item-data{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;margin-top:13px;padding:10px 11px;border:1px solid #30362b;background:#10130f;border-radius:7px}
+.data-label{font:500 .55rem 'DM Mono';letter-spacing:.1em;color:var(--accent);padding-top:2px;white-space:nowrap}
+.data-value{font:500 .58rem 'DM Mono';line-height:1.55;color:#aeb4a6}
+.item.expandable.has-stats:after{content:"↗  + DATA";color:#7b8175}
+.item.expandable.has-stats:hover:after,.item.expandable.has-stats.is-open:after{color:var(--accent)}
+.item.expandable.has-stats.is-open:after{content:"↙  − DATA"}
+.item.expandable.has-stats:after{background:#10130f;border:1px solid #30362b;border-radius:99px;padding:4px 7px;top:10px;right:10px}
+.day:nth-of-type(odd) .item.expandable.has-stats:after{border-color:#39402f}
+@media(max-width:760px){
+ .item.expandable{padding-right:16px}
+ .item.expandable.has-stats:after{content:"TAP + DATA";top:10px;right:10px;font-size:.52rem}
+ .item.expandable.has-stats.is-open:after{content:"TAP − DATA"}
+ .item.expandable.is-open .item-data{grid-template-columns:1fr;gap:5px}
+ .item.expandable.is-open .data-value{font-size:.57rem}
+}
