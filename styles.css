@@ -73,3 +73,46 @@ nav{height:68px}
  .item.expandable.is-open .item-data{grid-template-columns:1fr;gap:5px}
  .item.expandable.is-open .data-value{font-size:.57rem}
 }
+
+/* --- fresh itinerary presentation --- */
+.itinerary-page{max-width:1380px}
+.itinerary-page .page-head{margin-bottom:0;padding-bottom:46px}
+.trip-ribbon{display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line);padding:15px 0 17px;font:500 .62rem 'DM Mono';color:#b6bbaf;letter-spacing:.12em}
+.trip-ribbon b{color:var(--accent);font-size:.9rem}.trip-ribbon em{margin-left:auto;color:#666c61;font-style:normal}
+.itinerary-day{grid-template-columns:105px 1fr;gap:36px;padding:70px 0;border-top:1px solid var(--line)}
+.itinerary-day:first-of-type{border-top:0}
+.itinerary-day .dayno{position:sticky;top:98px;font-size:.66rem;line-height:1.6}
+.day-body{min-width:0}
+.day-heading{display:flex;justify-content:space-between;gap:25px;align-items:flex-start;margin-bottom:27px}
+.day-heading h2{font-size:clamp(2.2rem,4.3vw,4.2rem);line-height:.95;margin:0 0 12px;letter-spacing:-.065em}
+.day-marker{flex:none;width:54px;height:54px;border:1px solid #3d4437;border-radius:50%;display:grid;place-items:center;font:500 .63rem 'DM Mono';color:var(--accent);background:#12150f}
+.day-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.story-card{min-height:170px;padding:20px;background:linear-gradient(145deg,#181c17,#141713);border:1px solid #252a23;border-radius:12px;position:relative;cursor:pointer;overflow:hidden;transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease;outline:none}
+.story-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0%,rgba(217,255,98,.08),transparent 35%);opacity:0;transition:opacity .2s ease;pointer-events:none}
+.story-card:hover,.story-card.is-open{transform:translateY(-4px);border-color:#566047;background:#1b2019;box-shadow:0 22px 50px #0008;z-index:2}
+.story-card:hover:before,.story-card.is-open:before{opacity:1}
+.story-top{display:flex;justify-content:space-between;align-items:center;font:500 .56rem 'DM Mono';letter-spacing:.1em;color:#686e63}
+.story-index{color:var(--accent)}
+.story-type{border:1px solid #30362b;padding:4px 7px;border-radius:99px}
+.story-card h3{margin:28px 0 0;font-size:1.17rem;line-height:1.35;letter-spacing:-.025em;max-width:82%}
+.story-expand{display:none}
+.story-card.is-open .story-expand{display:block}
+.story-expand p{margin:18px 0 0;padding-top:16px;border-top:1px solid #343a30;color:#c3c7bd;font-size:.78rem;line-height:1.7}
+.story-meta{display:grid;grid-template-columns:auto 1fr;gap:11px;margin-top:14px;padding:10px 11px;background:#11140f;border:1px solid #2f352b;border-radius:8px}
+.story-meta span{font:500 .52rem 'DM Mono';letter-spacing:.09em;color:var(--accent);white-space:nowrap}
+.story-meta b{font:500 .56rem 'DM Mono';line-height:1.55;color:#9da59a}
+.story-card.has-data .story-type{color:var(--accent);border-color:#3d4731}
+@media(max-width:1080px){.day-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ .trip-ribbon{gap:9px;flex-wrap:wrap}.trip-ribbon em{width:100%;margin-left:0}
+ .itinerary-day{grid-template-columns:1fr;gap:13px;padding:48px 0}
+ .itinerary-day .dayno{position:static}
+ .day-heading{margin-bottom:20px}.day-heading h2{font-size:2.45rem}
+ .day-marker{width:46px;height:46px}
+ .day-grid{grid-template-columns:1fr}
+ .story-card{min-height:135px}
+ .story-card h3{font-size:1.1rem;margin-top:22px}
+ .story-card.is-open{transform:none}
+ .story-expand{display:none}.story-card.is-open .story-expand{display:block}
+ .story-meta{grid-template-columns:1fr;gap:5px}
+}
