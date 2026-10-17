@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f14"><title>Gear checklist · Bhutan</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("bhutan-theme")||"bhutan"}catch(e){document.documentElement.dataset.theme="bhutan"}</script><link rel="stylesheet" href="styles.css?v=theme-fix-5">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a0f14"><title>Gear checklist · Bhutan</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("bhutan-theme")||"bhutan"}catch(e){document.documentElement.dataset.theme="bhutan"}</script><link rel="stylesheet" href="styles.css?v=field-journal-1">
 <style>
 .gear-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:24px 0}
 .progress-wrap{padding:20px 22px;background:linear-gradient(145deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:16px;margin:28px 0}
@@ -50,5 +50,5 @@ document.getElementById('showAll').addEventListener('click',()=>document.querySe
 document.getElementById('showOpen').addEventListener('click',()=>document.querySelectorAll('.gear-row').forEach(r=>r.classList.toggle('gear-hidden',r.querySelector('input').checked)));
 document.getElementById('resetChecks').addEventListener('click',()=>{if(!confirm('Clear every checked item on this device?'))return;boxes.forEach(b=>{b.checked=false;updateRow(b)});persist();updateProgress();document.querySelectorAll('.gear-row').forEach(r=>r.classList.remove('gear-hidden'))});
 updateProgress();})();
-</script><script src="theme.js?v=theme-fix-5"></script>
+</script><script src="theme.js?v=field-journal-1"></script>
 </body></html>
