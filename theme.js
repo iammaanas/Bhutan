@@ -1,64 +1,78 @@
 (() => {
   "use strict";
-  const storageKey = "bhutan-theme";
-  const names = { bhutan: "Bhutan", aurora: "Aurora", forest: "Forest", rose: "Rose", ocean: "Ocean", graphite: "Graphite" };
-  const chrome = { bhutan:"#0a0f14", aurora:"#031517", forest:"#041309", rose:"#160912", ocean:"#03101b", graphite:"#0c0e11" };
+  const STORAGE_KEY = "bhutan-theme";
+  const THEMES = {
+    bhutan: { name: "Bhutan", chrome: "#0a0f14" },
+    aurora: { name: "Aurora", chrome: "#031517" },
+    forest: { name: "Forest", chrome: "#041309" },
+    rose: { name: "Rose", chrome: "#160912" },
+    ocean: { name: "Ocean", chrome: "#03101b" },
+    graphite: { name: "Graphite", chrome: "#0c0e11" }
+  };
 
-  function initThemePicker() {
-    const picker = document.getElementById("themePicker");
-    const toggle = document.getElementById("themeToggle");
-    const menu = document.getElementById("themeMenu");
-    const label = document.getElementById("themeLabel");
-    if (!picker || !toggle || !menu || !label) return;
-
-    function applyTheme(theme, persist = true) {
-      if (!Object.prototype.hasOwnProperty.call(names, theme)) theme = "bhutan";
-      document.documentElement.dataset.theme = theme;
-      label.textContent = names[theme];
-      document.querySelectorAll(".theme-option").forEach(option => {
-        option.setAttribute("aria-pressed", String(option.dataset.theme === theme));
-      });
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", chrome[theme]);
-      if (persist) {
-        try { localStorage.setItem(storageKey, theme); } catch (error) { /* storage may be disabled */ }
-      }
-    }
-
-    function closeMenu() {
-      menu.hidden = true;
-      toggle.setAttribute("aria-expanded", "false");
-    }
-
-    let selected = "bhutan";
-    try { selected = localStorage.getItem(storageKey) || "bhutan"; } catch (error) { /* use default */ }
-    applyTheme(selected, false);
-
-    toggle.addEventListener("click", () => {
-      menu.hidden = !menu.hidden;
-      toggle.setAttribute("aria-expanded", String(!menu.hidden));
-    });
-    document.querySelectorAll(".theme-option").forEach(option => {
-      option.addEventListener("click", () => {
-        applyTheme(option.dataset.theme);
-        closeMenu();
-        toggle.focus();
-      });
-    });
-    document.addEventListener("click", event => {
-      if (!picker.contains(event.target)) closeMenu();
-    });
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeMenu();
-        toggle.focus();
-      }
-    });
+  const root = document.documentElement;
+  const picker = document.getElementById("themePicker");
+  const toggle = document.getElementById("themeToggle");
+  const menu = document.getElementById("themeMenu");
+  const label = document.getElementById("themeLabel");
+  if (!picker || !toggle || !menu || !label) {
+    console.warn("Bhutan theme picker: required controls not found.");
+    return;
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initThemePicker, { once: true });
-  } else {
-    initThemePicker();
+  function applyTheme(requested, persist = true) {
+    const theme = Object.prototype.hasOwnProperty.call(THEMES, requested) ? requested : "bhutan";
+    root.setAttribute("data-theme", theme);
+    label.textContent = THEMES[theme].name;
+    document.querySelectorAll(".theme-option[data-theme]").forEach(option => {
+      option.setAttribute("aria-pressed", String(option.dataset.theme === theme));
+    });
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", THEMES[theme].chrome);
+    if (persist) {
+      try { localStorage.setItem(STORAGE_KEY, theme); } catch (error) { /* local persistence is optional */ }
+    }
   }
+
+  function closeMenu() {
+    menu.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  let savedTheme = "bhutan";
+  try { savedTheme = localStorage.getItem(STORAGE_KEY) || "bhutan"; } catch (error) { /* use default */ }
+  applyTheme(savedTheme, false);
+
+  toggle.addEventListener("click", event => {
+    event.preventDefault();
+    const opening = menu.hidden;
+    menu.hidden = !opening;
+    toggle.setAttribute("aria-expanded", String(opening));
+  });
+
+  picker.addEventListener("click", event => {
+    const option = event.target.closest(".theme-option[data-theme]");
+    if (!option) return;
+    event.preventDefault();
+    applyTheme(option.dataset.theme);
+    closeMenu();
+    toggle.focus();
+  });
+
+  document.addEventListener("click", event => {
+    if (!picker.contains(event.target)) closeMenu();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  window.addEventListener("storage", event => {
+    if (event.key === STORAGE_KEY) applyTheme(event.newValue || "bhutan", false);
+  });
+
+  root.dataset.themeReady = "true";
 })();
