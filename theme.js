@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const STORAGE_KEY = "bhutan-theme";
+  const KEY = "bhutan-theme";
   const THEMES = {
     bhutan: { name: "Bhutan", chrome: "#0a0f14" },
     aurora: { name: "Aurora", chrome: "#031517" },
@@ -12,67 +12,55 @@
 
   const root = document.documentElement;
   const picker = document.getElementById("themePicker");
-  const toggle = document.getElementById("themeToggle");
-  const menu = document.getElementById("themeMenu");
+  const summary = document.getElementById("themeToggle");
   const label = document.getElementById("themeLabel");
-  if (!picker || !toggle || !menu || !label) {
-    console.warn("Bhutan theme picker: required controls not found.");
+  if (!picker || !summary || !label) {
+    console.error("Bhutan theme picker controls are missing.");
     return;
   }
 
-  function applyTheme(requested, persist = true) {
-    const theme = Object.prototype.hasOwnProperty.call(THEMES, requested) ? requested : "bhutan";
-    root.setAttribute("data-theme", theme);
+  function applyTheme(value, save = true) {
+    const theme = Object.hasOwn(THEMES, value) ? value : "bhutan";
+    root.dataset.theme = theme;
     label.textContent = THEMES[theme].name;
     document.querySelectorAll(".theme-option[data-theme]").forEach(option => {
       option.setAttribute("aria-pressed", String(option.dataset.theme === theme));
     });
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", THEMES[theme].chrome);
-    if (persist) {
-      try { localStorage.setItem(STORAGE_KEY, theme); } catch (error) { /* local persistence is optional */ }
+    if (meta) meta.content = THEMES[theme].chrome;
+    if (save) {
+      try { localStorage.setItem(KEY, theme); } catch (error) { /* Browser storage can be disabled. */ }
     }
   }
 
-  function closeMenu() {
-    menu.hidden = true;
-    toggle.setAttribute("aria-expanded", "false");
-  }
+  try { applyTheme(localStorage.getItem(KEY) || "bhutan", false); }
+  catch (error) { applyTheme("bhutan", false); }
 
-  let savedTheme = "bhutan";
-  try { savedTheme = localStorage.getItem(STORAGE_KEY) || "bhutan"; } catch (error) { /* use default */ }
-  applyTheme(savedTheme, false);
-
-  toggle.addEventListener("click", event => {
-    event.preventDefault();
-    const opening = menu.hidden;
-    menu.hidden = !opening;
-    toggle.setAttribute("aria-expanded", String(opening));
+  // HTML <details> handles opening/closing, so the menu still opens if this
+  // script fails to initialize. JavaScript only applies the selected palette.
+  picker.addEventListener("toggle", () => {
+    summary.setAttribute("aria-expanded", String(picker.open));
   });
-
   picker.addEventListener("click", event => {
     const option = event.target.closest(".theme-option[data-theme]");
     if (!option) return;
     event.preventDefault();
     applyTheme(option.dataset.theme);
-    closeMenu();
-    toggle.focus();
+    picker.open = false;
+    summary.setAttribute("aria-expanded", "false");
+    summary.focus();
   });
-
   document.addEventListener("click", event => {
-    if (!picker.contains(event.target)) closeMenu();
+    if (!picker.contains(event.target)) picker.open = false;
   });
-
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-      closeMenu();
-      toggle.focus();
+      picker.open = false;
+      summary.setAttribute("aria-expanded", "false");
+      summary.focus();
     }
   });
-
   window.addEventListener("storage", event => {
-    if (event.key === STORAGE_KEY) applyTheme(event.newValue || "bhutan", false);
+    if (event.key === KEY) applyTheme(event.newValue || "bhutan", false);
   });
-
-  root.dataset.themeReady = "true";
 })();

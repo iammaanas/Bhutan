@@ -72,3 +72,11 @@ footer{padding:50px 5vw;border-top:1px solid var(--line);color:#63707b;font:500 
   box-shadow:0 0 25px var(--accent-soft);
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Native details dropdown: opening the palette must not depend on JavaScript */
+.theme-picker{position:relative;z-index:30;flex:0 0 auto}
+.theme-picker>summary{list-style:none}
+.theme-picker>summary::-webkit-details-marker{display:none}
+.theme-picker:not([open])>.theme-menu{display:none}
+.theme-picker[open]>.theme-toggle{border-color:var(--accent-border);background:var(--card2)}
+.theme-picker[open]>.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
