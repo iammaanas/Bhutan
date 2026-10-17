@@ -296,3 +296,115 @@ body{background:var(--page-bg);letter-spacing:-.008em}body:before{background-ima
 @media(max-width:900px){.site-nav{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px 15px;padding:12px 5vw}.site-nav .brand{grid-column:1;grid-row:1}.site-nav .nav-actions{grid-column:2;grid-row:1}.site-nav .navlinks{grid-column:1/-1;grid-row:2;justify-content:flex-start;overflow:visible;gap:20px;max-width:100%;flex-wrap:wrap}.home-hero{grid-template-columns:1fr;gap:25px;padding-top:7vh}.home-hero:before{width:70%;height:55%;top:5%;bottom:auto}.hero-card{max-width:620px;width:100%;margin:10px auto 0}.mode-switcher{grid-template-columns:1fr;gap:18px}.journal-layout{grid-template-columns:1fr}.journal-aside{position:static}.journal-prompts{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 16px}.journal-prompts>span{grid-column:1/-1}.film-setup{grid-template-columns:1fr}.reel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.site-nav{padding:10px 16px;gap:10px}.site-nav .brand strong{font-size:.9rem}.site-nav .navlinks{gap:15px;font-size:.56rem;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:none}.site-nav .navlinks::-webkit-scrollbar{display:none}.nav-group>summary,.site-nav .navlinks>a{padding:5px 0}.nav-menu{position:fixed;left:12px;right:12px;top:108px;width:auto;max-height:70vh;overflow:auto}.site-nav .theme-toggle{padding:6px 7px;font-size:.5rem}.site-nav .theme-menu{right:0;position:absolute}.page-wrap{padding:42px 18px 64px}.page-head h1{font-size:clamp(3.1rem,15vw,4.2rem)}.page-head p{font-size:.86rem}.home-hero{padding:58px 18px 54px}.home-hero h1{font-size:clamp(4rem,18vw,5.4rem)}.home-hero:before{width:100%;height:52%;right:0;top:4%;border-radius:0;opacity:.3}.stats{margin-top:28px}.hero-route{margin:46px 0}.hero-node{width:56px;height:56px;font-size:.47rem}.hero-card{padding:19px}.home-dashboard{padding:55px 18px}.dash-card,.dash-card.wide{min-height:0;padding:20px;grid-template-columns:24px minmax(0,1fr) 15px}.dash-card h3{font-size:1.35rem}.mode-switcher{padding:38px 18px;gap:20px}.mode-intro h2{font-size:2.8rem}.field-quick-grid{grid-template-columns:1fr 1fr}.field-quick-grid>a{min-height:105px;padding:12px}.mode-tabs button{padding:9px 10px;font-size:.52rem}.home-fact{padding:30px 18px;margin-bottom:5vh}.trip-ribbon{font-size:.53rem;gap:8px}.itinerary-day{padding:38px 0}.day-grid{grid-template-columns:1fr}.story-card{min-height:115px}.map-controls{gap:4px}.map-controls button{padding:8px 9px;font-size:.5rem}#trip-map{height:470px}.journal-editor,.journal-aside{padding:19px}.journal-two-col{grid-template-columns:1fr;gap:0}.journal-day-picker{align-items:flex-start;flex-direction:column}.journal-day-picker select{max-width:none}.journal-actions .btn{width:100%}.journal-entry-link{grid-template-columns:95px minmax(0,1fr) 12px;gap:8px}.film-cover{grid-template-columns:1fr 58px;gap:12px;min-height:335px;padding:22px}.film-cover-copy h2{font-size:3.65rem}.film-cover-stamp{font-size:.43rem;padding:7px}.film-specs{gap:18px}.film-specs b{font-size:1.2rem}.section-title-row{align-items:flex-start;flex-direction:column}.shot-progress{width:100%}.shot-groups,.reel-grid{grid-template-columns:1fr}.shot-group{padding:17px}.film-notes{grid-template-columns:1fr;gap:12px}.site-footer{padding:23px 18px;font-size:.5rem;display:grid;grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.mode-status>a,.field-quick-grid>a,.dash-card{transition:none!important}}
+
+
+/* Field Journal polish pass: dropdown isolation, responsive breathing room, and safe text wrapping */
+.site-nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  overflow:visible;
+  isolation:isolate;
+}
+.site-nav .navlinks{overflow:visible;min-width:0}
+.nav-group{z-index:1}
+.nav-group[open]{z-index:110}
+.nav-group>summary{position:relative;z-index:111;min-height:36px}
+.nav-menu{
+  box-sizing:border-box;
+  z-index:120;
+  width:min(245px,calc(100vw - 24px));
+  max-width:calc(100vw - 24px);
+  max-height:min(70vh,520px);
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  overflow-wrap:anywhere;
+}
+.nav-menu a{min-width:0;white-space:normal;line-height:1.45;overflow-wrap:anywhere}
+.nav-menu small{line-height:1.4;overflow-wrap:anywhere}
+.navlinks>.nav-group:last-child>.nav-menu{left:auto;right:-8px}
+.nav-actions{position:relative;z-index:115}
+.site-nav .theme-picker{z-index:125}
+.site-nav .theme-picker[open]{z-index:130}
+.site-nav .theme-menu{z-index:140;max-height:min(70vh,520px);overflow-y:auto;overscroll-behavior:contain}
+.site-nav details>summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}
+.site-nav a:focus-visible,.nav-menu a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+/* Allow the full navigation row to breathe on medium-width screens too. */
+@media(max-width:1120px){
+  .site-nav{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;gap:9px 15px;padding:11px clamp(18px,4vw,32px)}
+  .site-nav .brand{grid-column:1;grid-row:1;align-self:center}
+  .site-nav .nav-actions{grid-column:2;grid-row:1}
+  .site-nav .navlinks{grid-column:1/-1;grid-row:2;justify-content:flex-start;flex-wrap:wrap;gap:9px clamp(14px,2vw,24px);width:100%;padding:2px 0 3px;margin:0}
+  .site-nav .brand span{display:inline}
+  .journal-shortcut{display:none}
+  .nav-menu{top:calc(100% + 7px)}
+}
+@media(max-width:900px){
+  .site-nav .navlinks{flex-wrap:wrap;overflow:visible;row-gap:6px}
+  .nav-menu{width:min(250px,calc(100vw - 24px))}
+}
+@media(max-width:600px){
+  .site-nav{padding:10px 16px;gap:10px}
+  .site-nav .brand span{display:none}
+  .site-nav .navlinks{grid-row:2;flex-wrap:nowrap;overflow-x:auto;overflow-y:visible;white-space:nowrap;gap:15px;scrollbar-width:none}
+  .site-nav .navlinks::-webkit-scrollbar{display:none}
+  .nav-menu{
+    position:fixed;
+    left:12px!important;
+    right:12px!important;
+    top:calc(var(--field-nav-height,108px) + 4px);
+    width:auto;
+    max-width:none;
+    max-height:calc(100dvh - var(--field-nav-height,108px) - 20px);
+    border-radius:8px;
+  }
+  .nav-menu a{padding:12px 13px}
+  .site-nav .theme-menu{max-height:calc(100dvh - 90px);max-width:calc(100vw - 24px)}
+  .page-wrap{padding-left:18px;padding-right:18px}
+}
+
+/* Cross-page layout audit: prevent long labels and nested grids from forcing clipping. */
+.page-wrap,.home-hero,.home-dashboard,.home-fact,.mode-switcher,.page-head,
+.dash-grid,.dash-card,.stay-card,.food-card,.cost-group,.cost-hero>div,
+.itinerary-day,.day-body,.day-grid,.story-card,.items,.item,.journal-layout,
+.journal-aside,.journal-editor,.journal-two-col,.journal-entry-link,
+.film-cover,.film-setup,.setup-card,.shot-groups,.shot-group,.shot-group-head,
+.shot-row,.reel-grid,.reel-card,.film-notes,.gear-grid,.gear-group,.workflow,
+.deliverables,.progress-wrap{min-width:0;max-width:100%}
+.page-head p,.lede,.dash-card p,.story-card h3,.item,.notice,
+.cost-row span,.stay-card p,.food-card p,.gear-row span,.gear-row small,
+.shot-group-head h3,.shot-group-head p,.shot-row b,.shot-row small,
+.reel-card h3,.reel-card p,.journal-entry-link b{
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+.cost-row{align-items:flex-start}
+.cost-row span{min-width:0}
+.cost-row b{flex:0 0 auto}
+.map-controls{min-width:0}
+.map-controls button{max-width:100%;white-space:normal;line-height:1.35}
+.map-shell,#trip-map{max-width:100%;min-width:0}
+.map-legend{max-width:calc(100% - 24px);flex-wrap:wrap;line-height:1.4}
+.journal-entry-link{grid-template-columns:minmax(84px,.55fr) minmax(0,1fr) 12px}
+.film-cover-copy,.film-cover-stamp,.setup-copy{min-width:0}
+.shot-row input{flex:0 0 auto}
+.story-card:focus-visible,.btn:focus-visible,.shot-toolbar button:focus-visible,
+.map-controls button:focus-visible,.mode-tabs button:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+@media(max-width:760px){
+  .day-grid{grid-template-columns:minmax(0,1fr)}
+  .cost-row{gap:10px}
+  .cost-row b{white-space:normal;text-align:right}
+  .journal-entry-link{grid-template-columns:minmax(76px,.45fr) minmax(0,1fr) 12px;gap:8px}
+  .film-cover{grid-template-columns:minmax(0,1fr) auto}
+  .film-cover-copy h2{overflow-wrap:anywhere}
+  .shot-group-head{grid-template-columns:22px minmax(0,1fr);gap:9px}
+  .site-footer{align-items:flex-start;line-height:1.6}
+}
+@media(prefers-reduced-motion:reduce){
+ .nav-group>summary,.nav-group>summary span{transition:none!important}
+}
