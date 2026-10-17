@@ -408,3 +408,12 @@ body{background:var(--page-bg);letter-spacing:-.008em}body:before{background-ima
 @media(prefers-reduced-motion:reduce){
  .nav-group>summary,.nav-group>summary span{transition:none!important}
 }
+
+/* Final responsive dropdown correction */
+.site-nav .nav-actions{z-index:90}
+.nav-group[open]{z-index:115}
+.site-nav .navlinks>.nav-group:last-child>.nav-menu{left:auto;right:-8px}
+@media(max-width:600px){
+  .site-nav .navlinks{overflow:visible;flex-wrap:wrap;row-gap:5px}
+  .nav-menu{top:calc(var(--field-nav-height,108px) + 4px)}
+}
