@@ -1,66 +1,30 @@
 (() => {
-  "use strict";
-  const KEY = "bhutan-theme";
-  const THEMES = {
-    bhutan: { name: "Bhutan", chrome: "#0a0f14" },
-    aurora: { name: "Aurora", chrome: "#031517" },
-    forest: { name: "Forest", chrome: "#041309" },
-    rose: { name: "Rose", chrome: "#160912" },
-    ocean: { name: "Ocean", chrome: "#03101b" },
-    graphite: { name: "Graphite", chrome: "#0c0e11" }
-  };
-
-  const root = document.documentElement;
-  const picker = document.getElementById("themePicker");
-  const summary = document.getElementById("themeToggle");
-  const label = document.getElementById("themeLabel");
-  if (!picker || !summary || !label) {
-    console.error("Bhutan theme picker controls are missing.");
-    return;
-  }
-
-  function applyTheme(value, save = true) {
-    const theme = Object.hasOwn(THEMES, value) ? value : "bhutan";
-    root.dataset.theme = theme;
-    label.textContent = THEMES[theme].name;
-    document.querySelectorAll(".theme-option[data-theme]").forEach(option => {
-      option.setAttribute("aria-pressed", String(option.dataset.theme === theme));
-    });
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = THEMES[theme].chrome;
-    if (save) {
-      try { localStorage.setItem(KEY, theme); } catch (error) { /* Browser storage can be disabled. */ }
-    }
-  }
-
-  try { applyTheme(localStorage.getItem(KEY) || "bhutan", false); }
-  catch (error) { applyTheme("bhutan", false); }
-
-  // HTML <details> handles opening/closing, so the menu still opens if this
-  // script fails to initialize. JavaScript only applies the selected palette.
-  picker.addEventListener("toggle", () => {
-    summary.setAttribute("aria-expanded", String(picker.open));
-  });
-  picker.addEventListener("click", event => {
-    const option = event.target.closest(".theme-option[data-theme]");
-    if (!option) return;
-    event.preventDefault();
-    applyTheme(option.dataset.theme);
-    picker.open = false;
-    summary.setAttribute("aria-expanded", "false");
-    summary.focus();
-  });
-  document.addEventListener("click", event => {
-    if (!picker.contains(event.target)) picker.open = false;
-  });
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      picker.open = false;
-      summary.setAttribute("aria-expanded", "false");
-      summary.focus();
-    }
-  });
-  window.addEventListener("storage", event => {
-    if (event.key === KEY) applyTheme(event.newValue || "bhutan", false);
-  });
+ "use strict";
+ const KEY="bhutan-theme";
+ const THEMES={bhutan:{name:"Bhutan",chrome:"#101915"},aurora:{name:"Aurora",chrome:"#031517"},forest:{name:"Forest",chrome:"#041309"},rose:{name:"Rose",chrome:"#160912"},ocean:{name:"Ocean",chrome:"#03101b"},graphite:{name:"Graphite",chrome:"#0c0e11"}};
+ const root=document.documentElement;
+ const sharedNav="<nav class=\"site-nav\">\n<a class=\"brand\" href=\"index.html\"><strong>BHUTAN</strong><span>FIELD JOURNAL <i>/ 26–27</i></span></a>\n<div class=\"navlinks\" aria-label=\"Site sections\"><a href=\"index.html\">Overview</a>\n<details class=\"nav-group\"><summary>Journey <span aria-hidden=\"true\">⌄</span></summary><div class=\"nav-menu\"><a href=\"itinerary.html\">Itinerary<small>Day by day</small></a><a href=\"route.html\">Route & map<small>Places and road links</small></a></div></details>\n<details class=\"nav-group\"><summary>Essentials <span aria-hidden=\"true\">⌄</span></summary><div class=\"nav-menu\"><a href=\"budget.html\">Budget<small>Known costs</small></a><a href=\"stays.html\">Stays<small>Where we sleep</small></a><a href=\"permits.html\">Entry<small>Border notes</small></a><a href=\"packing.html\">Packing<small>What to carry</small></a><a href=\"food.html\">Food<small>Things to taste</small></a></div></details>\n<details class=\"nav-group\"><summary>Fieldwork <span aria-hidden=\"true\">⌄</span></summary><div class=\"nav-menu\"><a href=\"gear.html\">Gear desk<small>Kit and backups</small></a><a href=\"film.html\">The film<small>Shots and reels</small></a><a href=\"journal.html\">Trip journal<small>Notes and memories</small></a></div></details></div>\n<div class=\"nav-actions\"><a class=\"journal-shortcut\" href=\"journal.html\">Journal ↗</a><details id=\"themePicker\" class=\"theme-picker\">\n<summary id=\"themeToggle\" class=\"theme-toggle\" aria-expanded=\"false\" aria-controls=\"themeMenu\"><span class=\"theme-dot\" aria-hidden=\"true\"></span><span id=\"themeLabel\">Bhutan</span><span aria-hidden=\"true\">⌄</span></summary>\n<div id=\"themeMenu\" class=\"theme-menu\">\n<button class=\"theme-option\" type=\"button\" data-theme=\"bhutan\" aria-pressed=\"true\"><span class=\"theme-colors\"><i style=\"background:#101915\"></i><i style=\"background:#18231f\"></i><i style=\"background:#d9b579\"></i><i style=\"background:#d7d0c2\"></i></span><span class=\"theme-option-copy\"><b>Bhutan</b><small>Pine · warm stone · ochre</small></span></button>\n<button class=\"theme-option\" type=\"button\" data-theme=\"aurora\" aria-pressed=\"false\"><span class=\"theme-colors\"><i style=\"background:#031517\"></i><i style=\"background:#073b3a\"></i><i style=\"background:#42f5d0\"></i><i style=\"background:#78ffe2\"></i></span><span class=\"theme-option-copy\"><b>Aurora</b><small>Electric mint · luminous cyan</small></span></button>\n<button class=\"theme-option\" type=\"button\" data-theme=\"forest\" aria-pressed=\"false\"><span class=\"theme-colors\"><i style=\"background:#041309\"></i><i style=\"background:#0a321c\"></i><i style=\"background:#31ed8c\"></i><i style=\"background:#71ffb2\"></i></span><span class=\"theme-option-copy\"><b>Forest</b><small>Emerald · vivid jade</small></span></button>\n<button class=\"theme-option\" type=\"button\" data-theme=\"rose\" aria-pressed=\"false\"><span class=\"theme-colors\"><i style=\"background:#160912\"></i><i style=\"background:#321326\"></i><i style=\"background:#ff78ad\"></i><i style=\"background:#ff9fc5\"></i></span><span class=\"theme-option-copy\"><b>Rose</b><small>Deep plum · vibrant rose</small></span></button>\n<button class=\"theme-option\" type=\"button\" data-theme=\"ocean\" aria-pressed=\"false\"><span class=\"theme-colors\"><i style=\"background:#03101b\"></i><i style=\"background:#07304a\"></i><i style=\"background:#24d9ff\"></i><i style=\"background:#5fe8ff\"></i></span><span class=\"theme-option-copy\"><b>Ocean</b><small>Deep blue · electric aqua</small></span></button>\n<button class=\"theme-option\" type=\"button\" data-theme=\"graphite\" aria-pressed=\"false\"><span class=\"theme-colors\"><i style=\"background:#0c0e11\"></i><i style=\"background:#20242a\"></i><i style=\"background:#e1e6ed\"></i><i style=\"background:#aeb8c4\"></i></span><span class=\"theme-option-copy\"><b>Graphite</b><small>Silver monochrome · crisp</small></span></button></div></details></div></nav>";
+ const nav=document.querySelector("nav");
+ if(nav) nav.outerHTML=sharedNav; else document.body.insertAdjacentHTML("afterbegin",sharedNav);
+ const picker=document.getElementById("themePicker"),summary=document.getElementById("themeToggle"),label=document.getElementById("themeLabel");
+ function applyTheme(value,save=true){
+  const theme=Object.hasOwn(THEMES,value)?value:"bhutan";
+  root.dataset.theme=theme;
+  if(label)label.textContent=THEMES[theme].name;
+  document.querySelectorAll(".theme-option[data-theme]").forEach(o=>o.setAttribute("aria-pressed",String(o.dataset.theme===theme)));
+  const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=THEMES[theme].chrome;
+  if(save){try{localStorage.setItem(KEY,theme)}catch{}}
+ }
+ try{applyTheme(localStorage.getItem(KEY)||"bhutan",false)}catch{applyTheme("bhutan",false)}
+ if(picker&&summary){
+  picker.addEventListener("toggle",()=>summary.setAttribute("aria-expanded",String(picker.open)));
+  picker.addEventListener("click",event=>{const o=event.target.closest(".theme-option[data-theme]");if(!o)return;event.preventDefault();applyTheme(o.dataset.theme);picker.open=false;summary.setAttribute("aria-expanded","false");summary.focus()});
+  document.addEventListener("click",event=>{if(!picker.contains(event.target))picker.open=false});
+  window.addEventListener("storage",event=>{if(event.key===KEY)applyTheme(event.newValue||"bhutan",false)});
+ }
+ const page=location.pathname.split("/").filter(Boolean).pop()||"index.html";
+ document.querySelectorAll(".nav-menu a[href],.navlinks>a[href]").forEach(a=>{if(a.getAttribute("href")===page){a.classList.add("active");a.setAttribute("aria-current","page");a.closest(".nav-group")?.querySelector("summary")?.classList.add("active")}});
+ document.addEventListener("keydown",event=>{if(event.key==="Escape")document.querySelectorAll(".nav-group[open]").forEach(g=>g.open=false)});
+ document.querySelectorAll("[data-home-mode]").forEach(button=>button.addEventListener("click",()=>{document.querySelectorAll("[data-home-mode]").forEach(b=>b.setAttribute("aria-selected",String(b===button)));document.querySelectorAll("[data-mode-panel]").forEach(panel=>panel.hidden=panel.dataset.modePanel!==button.dataset.homeMode)}));
+ if(page==="gear.html"){const h=document.querySelector(".page-head h1");if(h&&/Don't forget/i.test(h.textContent))h.innerHTML='Ready the<br><i>kit.</i>';const e=document.querySelector(".page-head .eyebrow");if(e&&/MEDIA/i.test(e.textContent))e.textContent="FIELDWORK · KIT DESK"}
 })();

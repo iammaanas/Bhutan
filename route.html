@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Route · Bhutan</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("bhutan-theme")||"bhutan"}catch(e){document.documentElement.dataset.theme="bhutan"}</script><link rel="stylesheet" href="styles.css?v=theme-fix-5">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Route · Bhutan</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("bhutan-theme")||"bhutan"}catch(e){document.documentElement.dataset.theme="bhutan"}</script><link rel="stylesheet" href="styles.css?v=field-journal-1">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""></head>
 <body><nav><a class="brand" href="index.html">BHUTAN<span>/26–27</span></a><div class="navlinks"><a href="itinerary.html">Itinerary</a><a class="active" href="route.html">Route</a><a href="budget.html">Budget</a><a href="stays.html">Stays</a><a href="permits.html">Entry</a><a href="packing.html">Carry</a><a href="gear.html">Gear</a><a href="food.html">Food</a></div><details id="themePicker" class="theme-picker">
 <summary id="themeToggle" class="theme-toggle" aria-expanded="false" aria-controls="themeMenu"><span class="theme-dot" aria-hidden="true"></span><span id="themeLabel">Bhutan</span><span aria-hidden="true">⌄</span></summary>
@@ -10,8 +10,8 @@
 <button class="theme-option" type="button" data-theme="ocean" aria-pressed="false"><span class="theme-colors"><i style="background:#03101b"></i><i style="background:#07304a"></i><i style="background:#24d9ff"></i><i style="background:#5fe8ff"></i></span><span class="theme-option-copy"><b>Ocean</b><small>Deep blue · electric aqua</small></span></button>
 <button class="theme-option" type="button" data-theme="graphite" aria-pressed="false"><span class="theme-colors"><i style="background:#0c0e11"></i><i style="background:#20242a"></i><i style="background:#e1e6ed"></i><i style="background:#aeb8c4"></i></span><span class="theme-option-copy"><b>Graphite</b><small>Silver monochrome · crisp</small></span></button>
 </div></details></nav>
-<main class="page-wrap"><header class="page-head"><div><div class="eyebrow">GEOGRAPHY · FINAL ROUTE</div><h1>Where<br><i>we go.</i></h1></div><p>The final sequence begins in Mumbai, crosses through Bagdogra and Phuentsholing, loops through Bhutan, then returns to India.</p></header>
-<div class="map-shell"><div id="trip-map"></div><div class="map-legend"><span><i class="legend-dot route-dot"></i> Route</span><span><i class="legend-dot india-dot"></i> India</span><span><i class="legend-dot bhutan-dot"></i> Bhutan</span></div></div>
+<main class="page-wrap"><header class="page-head"><div><div class="eyebrow">GEOGRAPHY · FINAL ROUTE</div><h1>Where<br><i>we go.</i></h1></div><p>Explore the Bhutan loop separately from the India-side transfers. The lines are schematic; use them to understand the journey, not for navigation.</p></header>
+<div class="map-controls" aria-label="Map views"><button type="button" data-map-filter="bhutan" class="is-active">Bhutan loop</button><button type="button" data-map-filter="all">All trip stops</button><button type="button" data-map-filter="transfers">India transfers</button><span id="map-filter-note">Showing the Bhutan road loop and its main stops. This is a visual reference, not turn-by-turn navigation.</span></div><div class="map-shell"><div id="trip-map"></div><div class="map-legend"><span><i class="legend-dot route-dot"></i> Route</span><span><i class="legend-dot india-dot"></i> India</span><span><i class="legend-dot bhutan-dot"></i> Bhutan</span></div></div>
 <div class="map-note">Map tiles: OpenStreetMap contributors. Map geometry is a visual reference for the named trip route; it is not a navigation instruction.</div>
 <section class="route-summary"><div class="summary-kicker">FINAL SEQUENCE</div><div class="summary-line">Mumbai → Bagdogra → Jaigaon → Phuentsholing → Thimphu → Gangtey / Phobjikha → Trongsa → Punakha → Paro → Phuentsholing → Bagdogra → Mumbai</div></section>
 </main><footer>ROUTE · 24 DEC 2026 — 02 JAN 2027</footer>
@@ -32,7 +32,18 @@ const stops=[
 const route=[stops[3],stops[4],stops[7],stops[8],stops[9],stops[10],stops[3]];
 const map=L.map("trip-map",{scrollWheelZoom:true}).setView([27.35,89.45],8);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
-L.polyline(route.map(s=>[s.lat,s.long]),{color:"#ffbd59",weight:5,opacity:.9}).addTo(map);
-stops.forEach((s,i)=>{const cls=s.side==="india"?"marker-pin marker-india":"marker-pin marker-bhutan";const icon=L.divIcon({className:"",html:`<div class="${cls}">${i+1}</div>`,iconSize:[34,34],iconAnchor:[17,17]});L.marker([s.lat,s.long],{icon}).addTo(map).bindPopup(`<div class="popup"><div class="popup-day">${s.day}</div><strong>${s.name}</strong><p>${s.detail}</p></div>`)});map.fitBounds(L.latLngBounds(stops.map(s=>[s.lat,s.long])),{padding:[35,35]});
-</script><script src="theme.js?v=theme-fix-5"></script>
+const markerLayer=L.layerGroup().addTo(map), lineLayer=L.layerGroup().addTo(map);
+const layerNotes={bhutan:"Showing the Bhutan road loop and its main stops. This is a visual reference, not turn-by-turn navigation.",all:"Showing all named trip stops. Flight and road lines are schematic, not measured travel paths.",transfers:"Showing India-side transfers and the border approach. Confirm the actual driving route with your driver."};
+function drawRouteLayer(filter){
+ markerLayer.clearLayers();lineLayer.clearLayers();
+ const selected=filter==="bhutan"?stops.filter(s=>s.side==="bhutan"):filter==="transfers"?stops.filter(s=>["Mumbai","Bagdogra","Jaigaon","Phuentsholing"].includes(s.name)):stops;
+ selected.forEach(s=>{const i=stops.indexOf(s);const cls=s.side==="india"?"marker-pin marker-india":"marker-pin marker-bhutan";const icon=L.divIcon({className:"",html:`<div class="${cls}">${i+1}</div>`,iconSize:[34,34],iconAnchor:[17,17]});L.marker([s.lat,s.long],{icon}).addTo(markerLayer).bindPopup(`<div class="popup"><div class="popup-day">${s.day}</div><strong>${s.name}</strong><p>${s.detail}</p></div>`)});
+ if(filter!=="transfers"){const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#d9b579";L.polyline(route.map(s=>[s.lat,s.long]),{color:accent,weight:5,opacity:.9}).addTo(lineLayer);}
+ if(filter==="all"||filter==="transfers"){const transferStops=stops.filter(s=>["Mumbai","Bagdogra","Jaigaon","Phuentsholing"].includes(s.name));L.polyline(transferStops.map(s=>[s.lat,s.long]),{color:"#ff9664",weight:3,opacity:.75,dashArray:"6 8"}).addTo(lineLayer);}
+ document.getElementById("map-filter-note").textContent=layerNotes[filter];
+ const points=selected.map(s=>[s.lat,s.long]);if(points.length)map.fitBounds(L.latLngBounds(points),{padding:[35,35],maxZoom:filter==="all"?7:9});
+}
+document.querySelectorAll("[data-map-filter]").forEach(button=>button.addEventListener("click",()=>{document.querySelectorAll("[data-map-filter]").forEach(b=>b.classList.toggle("is-active",b===button));drawRouteLayer(button.dataset.mapFilter)}));
+drawRouteLayer("bhutan");
+</script><script src="theme.js?v=field-journal-1"></script>
 </body></html>
