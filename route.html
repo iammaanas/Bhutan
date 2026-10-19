@@ -14,26 +14,26 @@
 <button class="theme-option" type="button" data-theme="ocean" aria-pressed="false"><span class="theme-colors"><i style="background:#03101b"></i><i style="background:#07304a"></i><i style="background:#24d9ff"></i><i style="background:#5fe8ff"></i></span><span class="theme-option-copy"><b>Ocean</b><small>Deep blue · electric aqua</small></span></button>
 <button class="theme-option" type="button" data-theme="graphite" aria-pressed="false"><span class="theme-colors"><i style="background:#0c0e11"></i><i style="background:#20242a"></i><i style="background:#e1e6ed"></i><i style="background:#aeb8c4"></i></span><span class="theme-option-copy"><b>Graphite</b><small>Silver monochrome · crisp</small></span></button>
 </div></details></div></nav>
-<main class="page-wrap"><header class="page-head"><div><div class="eyebrow">GEOGRAPHY · FINAL ROUTE</div><h1>Where<br><i>we go.</i></h1></div><p>Explore the Bhutan loop separately from the India-side transfers. The lines are schematic; use them to understand the journey, not for navigation.</p></header>
+<main class="page-wrap"><header class="page-head"><div><div class="eyebrow">GEOGRAPHY · FINAL ROUTE</div><h1>Where<br><i>we go.</i></h1></div><p>Explore the Bhutan loop separately from the India-side transfers. The lines follow the day-by-day route headings and are schematic, not navigation. The source lists Trongsa Dzong and Trongsa Ta on 27 December but does not place them on that day’s route heading, so Trongsa is shown separately.</p></header>
 <div class="map-controls" aria-label="Map views"><button type="button" data-map-filter="bhutan" class="is-active">Bhutan loop</button><button type="button" data-map-filter="all">All trip stops</button><button type="button" data-map-filter="transfers">India transfers</button><span id="map-filter-note">Showing the Bhutan road loop and its main stops. This is a visual reference, not turn-by-turn navigation.</span></div><div class="map-controls" aria-label="Map views"><button type="button" data-map-filter="bhutan" class="is-active">Bhutan loop</button><button type="button" data-map-filter="all">All stops</button><button type="button" data-map-filter="transfers">India transfers</button><span id="map-filter-note">Showing the Bhutan road loop and the principal stops.</span></div><div class="map-shell"><div id="trip-map"></div><div class="map-legend"><span><i class="legend-dot route-dot"></i> Route</span><span><i class="legend-dot india-dot"></i> India</span><span><i class="legend-dot bhutan-dot"></i> Bhutan</span></div></div>
-<div class="map-note">Map tiles: OpenStreetMap contributors. Map geometry is a visual reference for the named trip route; it is not a navigation instruction.</div>
-<section class="route-summary"><div class="summary-kicker">FINAL SEQUENCE</div><div class="summary-line">Mumbai → Bagdogra → Jaigaon → Phuentsholing → Thimphu → Gangtey / Phobjikha → Trongsa → Punakha → Paro → Phuentsholing → Bagdogra → Mumbai</div></section>
+<div class="map-note">Map tiles: OpenStreetMap contributors. Map geometry is a visual reference for the named trip route; it is not a navigation instruction.</div><div class="notice route-source-note"><strong>Source note</strong><br>Trongsa Dzong and Trongsa Ta appear under 27 December in the day-by-day itinerary, but the same day’s route heading is Thimphu → Dochula → Punakha. The Trongsa marker is intentionally not connected to the route line pending clarification.</div>
+<section class="route-summary"><div class="summary-kicker">FINAL SEQUENCE</div><div class="summary-line">Mumbai → Bagdogra → Jaigaon → Phuentsholing → Thimphu → Dochula → Punakha → Dochula → Gangtey / Phobjikha → Paro → Phuentsholing → Bagdogra → Mumbai</div></section>
 </main><footer class="site-footer"><span>BHUTAN FIELD JOURNAL</span><span>24 DEC 2026 — 02 JAN 2027</span><span>BEFORE · DURING · AFTER</span></footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script><script>
 const stops=[
 {name:"Mumbai",lat:19.076,long:72.8777,side:"india",day:"Day 1 / Day 10",detail:"Trip origin and final destination."},
 {name:"Bagdogra",lat:26.6812,long:88.3286,side:"india",day:"Day 1 / Day 10",detail:"Outbound flight arrival and return flight departure."},
-{name:"Jaigaon",lat:26.8476,long:89.372,side:"india",day:"Day 1",detail:"India-side border point."},
-{name:"Phuentsholing",lat:26.8516,long:89.3884,side:"bhutan",day:"Days 1, 9",detail:"First and final Bhutan overnight base."},
-{name:"Thimphu",lat:27.4728,long:89.639,side:"bhutan",day:"Days 2–4",detail:"Two-night capital base."},
-{name:"Dochula",lat:27.4975,long:89.7625,side:"bhutan",day:"Day 4",detail:"Pass with 108 memorial chortens."},
-{name:"Phobjikha",lat:27.44,long:90.18,side:"bhutan",day:"Day 4",detail:"Valley section of the Gangtey day."},
-{name:"Gangtey",lat:27.486,long:90.267,side:"bhutan",day:"Days 4–5",detail:"Overnight in Gangtey / Phobjikha."},
-{name:"Trongsa",lat:27.5026,long:90.5077,side:"bhutan",day:"Day 5",detail:"Dzong and Trongsa Ta stop."},
-{name:"Punakha",lat:27.5916,long:89.8771,side:"bhutan",day:"Days 5–7",detail:"Two-night base."},
-{name:"Paro",lat:27.4286,long:89.4162,side:"bhutan",day:"Days 7–9",detail:"Two-night base including Tiger's Nest day."}
+{name:"Jaigaon",lat:26.8476,long:89.372,side:"india",day:"Day 1",detail:"India-side border point before Phuentsholing."},
+{name:"Phuentsholing",lat:26.8516,long:89.3884,side:"bhutan",day:"Days 1 and 9; depart Day 10",detail:"Bhutan entry point and return-to-India base."},
+{name:"Thimphu",lat:27.4728,long:89.639,side:"bhutan",day:"Days 2–3; depart Day 4",detail:"Capital sightseeing on 26 December."},
+{name:"Dochula",lat:27.4975,long:89.7625,side:"bhutan",day:"Day 4 route heading and Day 6 stop",detail:"108 memorial chortens are mentioned on the route and in the Gangtey / Phobjikha day."},
+{name:"Punakha",lat:27.5916,long:89.8771,side:"bhutan",day:"Days 4–5; depart Day 6",detail:"The source places Punakha arrival on 27 December, sightseeing on 28 December, then travel toward Gangtey / Phobjikha on 29 December."},
+{name:"Trongsa",lat:27.5026,long:90.5077,side:"bhutan",day:"Listed on Day 4 · 27 Dec",detail:"Trongsa Dzong and Trongsa Ta are listed as 27 December stops, although that day's route heading says Thimphu → Dochula → Punakha. Shown as a separate marker because the source does not resolve this route detail."},
+{name:"Phobjikha",lat:27.44,long:90.18,side:"bhutan",day:"Days 6–7",detail:"Valley section on 29 December; continue toward Paro on 30 December."},
+{name:"Gangtey",lat:27.486,long:90.267,side:"bhutan",day:"Day 6 · 29 Dec",detail:"Gangtey / Phobjikha sightseeing, monastery and crane information centre."},
+{name:"Paro",lat:27.4286,long:89.4162,side:"bhutan",day:"Days 7–8; depart Day 9",detail:"Paro sightseeing on 30 December and Tiger's Nest / Hot Stone Bath on 31 December."}
 ];
-const route=[stops[3],stops[4],stops[7],stops[8],stops[9],stops[10],stops[3]];
+const route=[stops[3],stops[4],stops[5],stops[6],stops[5],stops[8],stops[9],stops[10],stops[3]];
 const map=L.map("trip-map",{scrollWheelZoom:true}).setView([27.35,89.45],8);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
 const markerLayer=L.layerGroup().addTo(map), lineLayer=L.layerGroup().addTo(map);
