@@ -887,3 +887,15 @@ html[data-theme="bhutan-light"] .moment-card:hover{box-shadow:0 15px 34px rgba(4
 @media(max-width:760px){.moments-head{grid-template-columns:1fr;gap:15px}.moments-track{grid-template-columns:repeat(2,minmax(0,1fr))}.mode-switcher{grid-template-columns:1fr;gap:18px}}
 @media(max-width:520px){.moments-track{grid-template-columns:1fr}.moment-card{min-height:195px}.moments-foot{align-items:flex-start;flex-direction:column}.home-moments{padding-left:18px;padding-right:18px}}
 @media(prefers-reduced-motion:reduce){.mode-status-link,.mode-status-arrow,.moment-card,.site-nav .journal-shortcut::after{transition:none!important}}
+
+/* Keep the established dark hero treatment when the default palette is selected. */
+html[data-theme="bhutan-dark"] .home-hero:before{
+  background:linear-gradient(90deg,var(--bg) 0%,rgba(10,18,14,.35) 44%,rgba(10,18,14,.18) 100%),
+  linear-gradient(0deg,rgba(10,18,14,.6),transparent 55%),
+  url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1500&q=85") center/cover;
+  opacity:.56;filter:saturate(.62);
+}
+html[data-theme="bhutan-dark"] .hero-card{
+  background:linear-gradient(145deg,rgba(24,35,31,.9),rgba(14,22,18,.92));
+  border-color:rgba(232,224,208,.22);
+}
