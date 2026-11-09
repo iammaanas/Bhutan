@@ -899,3 +899,218 @@ html[data-theme="bhutan-dark"] .hero-card{
   background:linear-gradient(145deg,rgba(24,35,31,.9),rgba(14,22,18,.92));
   border-color:rgba(232,224,208,.22);
 }
+
+
+
+/* Review pass 2 — remove the hero's dead air and sharpen the two-mode system. */
+.home-hero{
+  min-height:calc(88vh - 74px);
+  padding-top:clamp(26px,4.2vh,48px);
+  padding-bottom:clamp(44px,6.5vh,76px);
+  align-items:center;
+}
+.home-hero:before{top:0;bottom:2%}
+.home-hero .hero-copy{min-width:0}
+.home-hero h1{
+  max-width:100%;
+  font-size:clamp(3.8rem,7.4vw,8.2rem);
+  line-height:.85;
+  overflow-wrap:normal;
+  text-wrap:pretty;
+}
+.home-hero .lede{max-width:650px}
+.site-nav .nav-actions{gap:26px}
+.site-nav .journal-shortcut{margin-right:1px}
+
+/* Make the primary action readable in every interaction state. */
+.btn.primary,
+.btn.primary:hover,
+.btn.primary:focus-visible{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:var(--on-accent)!important;
+  box-shadow:none;
+}
+.btn.primary:hover{filter:brightness(.96);transform:translateY(-1px)}
+
+/* The planning rows are deliberate, responsive links rather than static dividers. */
+.mode-tabs{gap:9px;padding-bottom:12px;margin-bottom:12px}
+.mode-tabs button{
+  position:relative;
+  min-height:42px;
+  padding:11px 17px;
+  border:1px solid var(--line);
+  border-radius:4px;
+  transition:background .22s,border-color .22s,color .22s,transform .22s;
+}
+.mode-tabs button[aria-selected="true"]{
+  color:var(--accent);
+  border-color:var(--accent-border);
+  background:var(--accent-soft);
+  box-shadow:inset 0 -2px 0 var(--accent);
+}
+.mode-tabs button:hover{transform:translateY(-2px)}
+.mode-panel:not([hidden]){animation:trip-panel-enter .34s cubic-bezier(.2,.7,.2,1) both}
+.mode-status-link{
+  position:relative;
+  display:grid;
+  grid-template-columns:36px minmax(0,1fr) 22px;
+  align-items:center;
+  min-height:82px;
+  margin:9px 0;
+  padding:17px 19px;
+  border:1px solid var(--line);
+  border-left:2px solid transparent;
+  border-radius:5px;
+  background:linear-gradient(110deg,var(--card2),var(--card));
+  color:var(--text);
+  box-shadow:0 5px 18px rgba(0,0,0,.035);
+  transition:background .22s,border-color .22s,transform .22s,box-shadow .22s;
+  animation:trip-row-enter .42s cubic-bezier(.2,.7,.2,1) both;
+}
+.mode-status-link:nth-child(2){animation-delay:.06s}
+.mode-status-link:nth-child(3){animation-delay:.12s}
+.mode-status-link:hover{
+  color:var(--text);
+  background:var(--card);
+  border-color:var(--accent-border);
+  border-left-color:var(--accent);
+  transform:translateX(5px);
+  box-shadow:0 12px 28px var(--accent-soft);
+}
+.mode-status-copy>b{
+  font-size:1rem;
+  letter-spacing:-.025em;
+  transition:color .2s,letter-spacing .2s;
+}
+.mode-status-link:hover .mode-status-copy>b{color:var(--accent);letter-spacing:0}
+.mode-status-arrow{
+  justify-self:end;
+  color:var(--accent);
+  font-size:1.35rem;
+  transition:transform .22s;
+}
+.mode-status-link:hover .mode-status-arrow{transform:translate(4px,-4px)}
+.mode-status-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.field-quick-grid>a{
+  position:relative;
+  border-radius:5px;
+  min-height:132px;
+  padding:18px;
+  background:linear-gradient(145deg,var(--card),var(--card2));
+  transition:transform .22s,border-color .22s,box-shadow .22s,background .22s;
+  animation:trip-row-enter .42s cubic-bezier(.2,.7,.2,1) both;
+}
+.field-quick-grid>a:nth-child(2){animation-delay:.04s}
+.field-quick-grid>a:nth-child(3){animation-delay:.08s}
+.field-quick-grid>a:nth-child(4){animation-delay:.12s}
+.field-quick-grid>a:nth-child(5){animation-delay:.16s}
+.field-quick-grid>a:nth-child(6){animation-delay:.20s}
+.field-quick-grid>a:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-border);
+  background:var(--card);
+  box-shadow:0 14px 30px var(--accent-soft);
+}
+.field-quick-grid>b{color:var(--text)}
+@keyframes trip-panel-enter{
+  from{opacity:0;transform:translateY(9px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes trip-row-enter{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* A clearer light palette: warm stone, deep forest ink and high-contrast bronze. */
+html[data-theme="bhutan-light"]{
+  color-scheme:light;
+  --bg:#ece6d8;
+  --layer:#e1d9c8;
+  --card:#f8f3e8;
+  --card2:#e9e0cf;
+  --accent:#714719;
+  --accent-soft:rgba(113,71,25,.15);
+  --text:#1c2e24;
+  --muted:#394c40;
+  --line:rgba(28,46,36,.23);
+  --pattern:rgba(113,71,25,.055);
+  --nav-bg:rgba(236,230,216,.97);
+  --heading-muted:#3b5143;
+  --node-bg:#d9cfbc;
+  --on-accent:#fffaf0;
+  --accent-border:rgba(113,71,25,.58);
+  --page-bg:radial-gradient(ellipse at 76% 0%,rgba(120,135,99,.14),transparent 43%),linear-gradient(180deg,#ece6d8 0%,#e6dfd0 62%,#f1ecdf 100%);
+}
+html[data-theme="bhutan-light"] body,
+html[data-theme="bhutan-light"] main,
+html[data-theme="bhutan-light"] footer{color:var(--text)}
+html[data-theme="bhutan-light"] .trip-ribbon,
+html[data-theme="bhutan-light"] .trip-ribbon em,
+html[data-theme="bhutan-light"] .story-card:after,
+html[data-theme="bhutan-light"] .map-note,
+html[data-theme="bhutan-light"] .stay-date,
+html[data-theme="bhutan-light"] footer,
+html[data-theme="bhutan-light"] .moments-head p,
+html[data-theme="bhutan-light"] .moments-foot p{color:var(--muted)}
+html[data-theme="bhutan-light"] .summary-line,
+html[data-theme="bhutan-light"] .item,
+html[data-theme="bhutan-light"] .dash-card p,
+html[data-theme="bhutan-light"] .page-head p,
+html[data-theme="bhutan-light"] .lede,
+html[data-theme="bhutan-light"] .mode-intro p,
+html[data-theme="bhutan-light"] .mode-status-copy>span,
+html[data-theme="bhutan-light"] .field-reminder,
+html[data-theme="bhutan-light"] .moment-card p{color:var(--muted)}
+html[data-theme="bhutan-light"] .home-hero:before{
+  top:0;
+  bottom:2%;
+  background:
+    linear-gradient(90deg,var(--bg) 0%,rgba(236,230,216,.48) 44%,rgba(236,230,216,.08) 100%),
+    linear-gradient(0deg,rgba(236,230,216,.35),transparent 55%),
+    url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1500&q=85") center/cover;
+  opacity:.48;
+  filter:saturate(.82) contrast(1.04);
+}
+html[data-theme="bhutan-light"] .hero-card{
+  background:linear-gradient(145deg,rgba(248,243,232,.96),rgba(233,224,207,.96));
+  border-color:var(--line);
+  box-shadow:0 22px 50px rgba(37,48,38,.12);
+}
+html[data-theme="bhutan-light"] .hero-node.active{box-shadow:0 0 0 7px var(--accent-soft)}
+html[data-theme="bhutan-light"] .mode-status-link,
+html[data-theme="bhutan-light"] .field-quick-grid>a,
+html[data-theme="bhutan-light"] .moment-card{box-shadow:0 7px 22px rgba(37,48,38,.06)}
+html[data-theme="bhutan-light"] .mode-status-link:hover,
+html[data-theme="bhutan-light"] .field-quick-grid>a:hover,
+html[data-theme="bhutan-light"] .moment-card:hover{box-shadow:0 14px 30px rgba(37,48,38,.13)}
+html[data-theme="bhutan-light"] .btn.primary,
+html[data-theme="bhutan-light"] .btn.primary:hover,
+html[data-theme="bhutan-light"] .btn.primary:focus-visible{color:#fffaf0!important}
+
+/* Keep the Journal link and theme toggle visibly separated. */
+@media(max-width:1120px){
+  .site-nav .nav-actions{gap:19px}
+}
+@media(max-width:900px){
+  .home-hero{
+    padding-top:clamp(28px,4vh,42px);
+    padding-bottom:46px;
+    min-height:auto;
+  }
+  .home-hero:before{top:0;bottom:auto;height:55%}
+  .home-hero h1{font-size:clamp(3.8rem,10vw,7rem)}
+  .site-nav .nav-actions{gap:14px}
+}
+@media(max-width:600px){
+  .home-hero{padding:34px 18px 50px}
+  .home-hero:before{height:50%}
+  .home-hero h1{font-size:clamp(3.6rem,15.5vw,5.1rem)}
+  .mode-status-link{grid-template-columns:28px minmax(0,1fr) 18px;padding:15px 13px}
+  .mode-status-copy>b{font-size:.9rem}
+  .field-quick-grid>a{min-height:100px;padding:14px}
+  .site-nav .nav-actions{gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mode-panel:not([hidden]),.mode-status-link,.field-quick-grid>a{animation:none!important;transition:none!important}
+}
